@@ -17,5 +17,5 @@ public class Field {
     private Farm farm;
 
     @OneToMany(mappedBy = "field" , fetch = FetchType.EAGER)
-    private List<Tree> Trees;
+    private List<Tree> trees;
 }
