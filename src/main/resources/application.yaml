@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: Citronix
+  datasource:
+    url: jdbc:postgresql://localhost:5432/citronix
+    username: postgres
+    password: ahmed
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
