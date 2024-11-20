@@ -15,7 +15,7 @@ public class Farm {
 
     private String name;
 
-    private String Localisation;
+    private String Location;
 
     private double superficie;
 
