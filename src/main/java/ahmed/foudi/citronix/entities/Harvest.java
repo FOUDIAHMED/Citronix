@@ -22,4 +22,7 @@ public class Harvest {
     @OneToMany(mappedBy = "Harvest" , fetch = FetchType.EAGER)
     private List<HarvestDetails> harvestDetails;
 
+    @OneToMany(fetch = FetchType.EAGER , mappedBy = "Harvest")
+    private List<Vent> ventes;
+
 }
