@@ -1,7 +1,7 @@
 package ahmed.foudi.citronix.dto.tree;
 
 import ahmed.foudi.citronix.dto.field.FieldEmbeddedDTO;
-import ahmed.foudi.citronix.dto.harvest.HarvestDetailsEmbeddedDTO;
+import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

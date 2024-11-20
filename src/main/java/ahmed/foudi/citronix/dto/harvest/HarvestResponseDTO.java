@@ -1,5 +1,6 @@
 package ahmed.foudi.citronix.dto.harvest;
 
+import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import ahmed.foudi.citronix.entities.Saison;
 import ahmed.foudi.citronix.dto.vent.VentEmbeddedDTO;
 import lombok.AllArgsConstructor;
