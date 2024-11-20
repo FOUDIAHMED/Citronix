@@ -1,10 +1,12 @@
 package ahmed.foudi.citronix.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 public class Field {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
