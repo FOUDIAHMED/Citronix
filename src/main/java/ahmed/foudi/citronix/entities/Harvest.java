@@ -19,10 +19,10 @@ public class Harvest {
 
     private Saison saison;
 
-    @OneToMany(mappedBy = "Harvest" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "harvest" , fetch = FetchType.EAGER)
     private List<HarvestDetails> harvestDetails;
 
-    @OneToMany(fetch = FetchType.EAGER , mappedBy = "Harvest")
+    @OneToMany(fetch = FetchType.EAGER , mappedBy = "harvest")
     private List<Vent> ventes;
 
 }

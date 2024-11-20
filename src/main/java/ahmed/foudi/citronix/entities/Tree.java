@@ -23,7 +23,7 @@ public class Tree {
     @JoinColumn(name = "field_id",nullable = false)
     private Field field;
 
-    @OneToMany(mappedBy = "Tree" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "tree" , fetch = FetchType.EAGER)
     private List<HarvestDetails> harvestDetails;
 
 
