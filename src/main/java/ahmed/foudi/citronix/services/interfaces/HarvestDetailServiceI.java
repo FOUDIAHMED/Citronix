@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface HarvestDetailServiceI {
     HarvestDetailsResponseDTO save(HarvestDetailsRequestDTO harvestDetailsRequestDTO);
-    HarvestDetailsResponseDTO update(Long id,HarvestDetailsRequestDTO harvestDetailsRequestDTO);
-    HarvestDetailsResponseDTO delete(Long id);
-    HarvestDetailsResponseDTO findById(Long id);
+    HarvestDetailsResponseDTO update(Long treeId,Long harvestId,HarvestDetailsRequestDTO harvestDetailsRequestDTO);
+    HarvestDetailsResponseDTO delete(Long treeId,Long harvestId);
+    HarvestDetailsResponseDTO findById(Long treeId,Long harvestId);
     List<HarvestDetailsResponseDTO> findAll();
 
 }
