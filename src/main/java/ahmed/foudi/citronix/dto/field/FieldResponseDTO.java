@@ -18,4 +18,6 @@ public class FieldResponseDTO {
 
     FarmEmbeddedDTO farm;
 
+    List<TreeEmbeddedDTO> trees;
+
 }
