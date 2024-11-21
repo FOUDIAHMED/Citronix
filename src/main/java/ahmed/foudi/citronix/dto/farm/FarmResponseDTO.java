@@ -15,7 +15,7 @@ public class FarmResponseDTO {
     Long id;
     String name;
 
-    String Location;
+    String location;
 
     double superficie;
 
