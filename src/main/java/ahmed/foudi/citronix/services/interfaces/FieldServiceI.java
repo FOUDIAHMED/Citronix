@@ -2,6 +2,8 @@ package ahmed.foudi.citronix.services.interfaces;
 
 import ahmed.foudi.citronix.dto.field.FieldRequestDTO;
 import ahmed.foudi.citronix.dto.field.FieldResponseDTO;
+import ahmed.foudi.citronix.exception.farmexception.FarmException;
+import ahmed.foudi.citronix.exception.fieldexception.SuperficieFieldException;
 
 import java.util.List;
 
