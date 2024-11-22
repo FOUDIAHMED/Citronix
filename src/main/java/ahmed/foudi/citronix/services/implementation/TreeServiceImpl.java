@@ -1,7 +1,7 @@
 package ahmed.foudi.citronix.services.implementation;
 
-import ahmed.foudi.citronix.dao.TreeDAO;
-import ahmed.foudi.citronix.dao.FieldDAO;
+import ahmed.foudi.citronix.repository.TreeRepository;
+import ahmed.foudi.citronix.repository.FieldRepository;
 import ahmed.foudi.citronix.dto.tree.TreeRequestDTO;
 import ahmed.foudi.citronix.dto.tree.TreeResponseDTO;
 import ahmed.foudi.citronix.entities.Tree;
@@ -24,19 +24,19 @@ import java.util.stream.Collectors;
 @Transactional
 public class TreeServiceImpl implements TreeServiceI {
     
-    private final TreeDAO treeDAO;
-    private final FieldDAO fieldDAO;
+    private final TreeRepository treeRepository;
+    private final FieldRepository fieldRepository;
     private final TreeDtoMapper treeDtoMapper;
 
     @Override
     public TreeResponseDTO save(TreeRequestDTO requestDTO) {
         Tree tree = treeDtoMapper.toEntity(requestDTO);
         ValidatePlantingDate(requestDTO.getPlantingDate());
-        Field field = fieldDAO.findById(requestDTO.getFieldId())
+        Field field = fieldRepository.findById(requestDTO.getFieldId())
                 .orElseThrow(() -> new EntityNotFoundException("Field not found with id: " + requestDTO.getFieldId()));
         ValidateTreeDensity(field);
         tree.setField(field);
-        Tree savedTree = treeDAO.save(tree);
+        Tree savedTree = treeRepository.save(tree);
         return treeDtoMapper.toDto(savedTree);
     }
 
@@ -60,41 +60,41 @@ public class TreeServiceImpl implements TreeServiceI {
 
     @Override
     public TreeResponseDTO update(Long id, TreeRequestDTO requestDTO) {
-        Tree existingTree = treeDAO.findById(id)
+        Tree existingTree = treeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tree not found with id: " + id));
         
         existingTree.setPlantingDate(requestDTO.getPlantingDate());
         
         if (requestDTO.getFieldId() != null && 
             !requestDTO.getFieldId().equals(existingTree.getField().getId())) {
-            Field newField = fieldDAO.findById(requestDTO.getFieldId())
+            Field newField = fieldRepository.findById(requestDTO.getFieldId())
                     .orElseThrow(() -> new EntityNotFoundException("Field not found with id: " + requestDTO.getFieldId()));
             existingTree.setField(newField);
         }
         
-        Tree updatedTree = treeDAO.save(existingTree);
+        Tree updatedTree = treeRepository.save(existingTree);
         return treeDtoMapper.toDto(updatedTree);
     }
 
     @Override
     public TreeResponseDTO delete(Long id) {
-        Tree tree = treeDAO.findById(id)
+        Tree tree = treeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tree not found with id: " + id));
         TreeResponseDTO response = treeDtoMapper.toDto(tree);
-        treeDAO.deleteById(id);
+        treeRepository.deleteById(id);
         return response;
     }
 
     @Override
     public TreeResponseDTO findbyId(Long id) {
-        Tree tree = treeDAO.findById(id)
+        Tree tree = treeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tree not found with id: " + id));
         return treeDtoMapper.toDto(tree);
     }
 
     @Override
     public List<TreeResponseDTO> findAll() {
-        return treeDAO.findAll().stream()
+        return treeRepository.findAll().stream()
                 .map(treeDtoMapper::toDto)
                 .collect(Collectors.toList());
     }

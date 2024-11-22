@@ -1,7 +1,7 @@
 package ahmed.foudi.citronix.services.implementation;
 
-import ahmed.foudi.citronix.dao.VentDAO;
-import ahmed.foudi.citronix.dao.HarvestDAO;
+import ahmed.foudi.citronix.repository.VentRepository;
+import ahmed.foudi.citronix.repository.HarvestRepository;
 import ahmed.foudi.citronix.dto.vent.VentRequestDTO;
 import ahmed.foudi.citronix.dto.vent.VentResponseDTO;
 import ahmed.foudi.citronix.entities.Vent;
@@ -21,25 +21,25 @@ import java.util.stream.Collectors;
 @Transactional
 public class VentServiceImpl implements VentServiceI {
     
-    private final VentDAO ventDAO;
-    private final HarvestDAO harvestDAO;
+    private final VentRepository ventRepository;
+    private final HarvestRepository harvestRepository;
     private final VentDtoMapper ventDtoMapper;
 
     @Override
     public VentResponseDTO save(VentRequestDTO ventRequestDTO) {
         Vent vent = ventDtoMapper.toEntity(ventRequestDTO);
         
-        Harvest harvest = harvestDAO.findById(ventRequestDTO.getHarvestId())
+        Harvest harvest = harvestRepository.findById(ventRequestDTO.getHarvestId())
                 .orElseThrow(() -> new EntityNotFoundException("Harvest not found with id: " + ventRequestDTO.getHarvestId()));
         vent.setHarvest(harvest);
         
-        Vent savedVent = ventDAO.save(vent);
+        Vent savedVent = ventRepository.save(vent);
         return ventDtoMapper.toDto(savedVent);
     }
 
     @Override
     public VentResponseDTO update(Long id, VentRequestDTO ventRequestDTO) {
-        Vent existingVent = ventDAO.findById(id)
+        Vent existingVent = ventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vent not found with id: " + id));
         
         existingVent.setDate(ventRequestDTO.getDate());
@@ -48,28 +48,28 @@ public class VentServiceImpl implements VentServiceI {
         
         if (ventRequestDTO.getHarvestId() != null && 
             !ventRequestDTO.getHarvestId().equals(existingVent.getHarvest().getId())) {
-            Harvest newHarvest = harvestDAO.findById(ventRequestDTO.getHarvestId())
+            Harvest newHarvest = harvestRepository.findById(ventRequestDTO.getHarvestId())
                     .orElseThrow(() -> new EntityNotFoundException("Harvest not found with id: " + ventRequestDTO.getHarvestId()));
             existingVent.setHarvest(newHarvest);
         }
         
-        Vent updatedVent = ventDAO.save(existingVent);
+        Vent updatedVent = ventRepository.save(existingVent);
         return ventDtoMapper.toDto(updatedVent);
     }
 
     @Override
     public VentResponseDTO delete(Long id) {
-        Vent vent = ventDAO.findById(id)
+        Vent vent = ventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vent not found with id: " + id));
         VentResponseDTO response = ventDtoMapper.toDto(vent);
-        ventDAO.deleteById(id);
+        ventRepository.deleteById(id);
         return response;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<VentResponseDTO> findAll() {
-        return ventDAO.findAll().stream()
+        return ventRepository.findAll().stream()
                 .map(ventDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -77,7 +77,7 @@ public class VentServiceImpl implements VentServiceI {
     @Override
     @Transactional(readOnly = true)
     public VentResponseDTO findById(Long id) {
-        Vent vent = ventDAO.findById(id)
+        Vent vent = ventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vent not found with id: " + id));
         return ventDtoMapper.toDto(vent);
     }

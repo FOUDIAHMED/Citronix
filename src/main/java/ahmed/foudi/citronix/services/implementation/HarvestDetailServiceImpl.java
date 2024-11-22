@@ -1,8 +1,8 @@
 package ahmed.foudi.citronix.services.implementation;
 
-import ahmed.foudi.citronix.dao.HarvestDetailDAO;
-import ahmed.foudi.citronix.dao.TreeDAO;
-import ahmed.foudi.citronix.dao.HarvestDAO;
+import ahmed.foudi.citronix.repository.HarvestDetailRepository;
+import ahmed.foudi.citronix.repository.TreeRepository;
+import ahmed.foudi.citronix.repository.HarvestRepository;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsRequestDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsResponseDTO;
 
@@ -26,16 +26,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
     
-    private final HarvestDetailDAO harvestDetailDAO;
-    private final TreeDAO treeDAO;
-    private final HarvestDAO harvestDAO;
+    private final HarvestDetailRepository harvestDetailRepository;
+    private final TreeRepository treeRepository;
+    private final HarvestRepository harvestRepository;
     private final HarvestDetailsDtoMapper harvestDetailDtoMapper;
 
     @Override
     public HarvestDetailsResponseDTO save(HarvestDetailsRequestDTO requestDTO) {
-        Tree tree = treeDAO.findById(requestDTO.getTreeId())
+        Tree tree = treeRepository.findById(requestDTO.getTreeId())
                 .orElseThrow(() -> new EntityNotFoundException("Tree not found with id: " + requestDTO.getTreeId()));
-        Harvest harvest = harvestDAO.findById(requestDTO.getHarvestId())
+        Harvest harvest = harvestRepository.findById(requestDTO.getHarvestId())
                 .orElseThrow(() -> new EntityNotFoundException("Harvest not found with id: " + requestDTO.getHarvestId()));
 
         HarvestDetails harvestDetail = harvestDetailDtoMapper.toEntity(requestDTO);
@@ -47,7 +47,7 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
         embdedId.setHarvestId(requestDTO.getHarvestId());
         harvestDetail.setId(embdedId);
         
-        HarvestDetails savedDetail = harvestDetailDAO.save(harvestDetail);
+        HarvestDetails savedDetail = harvestDetailRepository.save(harvestDetail);
         return harvestDetailDtoMapper.toDto(savedDetail);
     }
 
@@ -57,12 +57,12 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
         embdedId.setTreeId(treeId);
         embdedId.setHarvestId(harvestId);
         
-        HarvestDetails existingDetail = harvestDetailDAO.findById(embdedId)
+        HarvestDetails existingDetail = harvestDetailRepository.findById(embdedId)
                 .orElseThrow(() -> new EntityNotFoundException("HarvestDetail not found for treeId: " + treeId + " and harvestId: " + harvestId));
         
         existingDetail.setQuantity(requestDTO.getQuantity());
         
-        HarvestDetails updatedDetail = harvestDetailDAO.save(existingDetail);
+        HarvestDetails updatedDetail = harvestDetailRepository.save(existingDetail);
         return harvestDetailDtoMapper.toDto(updatedDetail);
     }
 
@@ -72,10 +72,10 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
         embdedId.setTreeId(treeId);
         embdedId.setHarvestId(harvestId);
         
-        HarvestDetails detail = harvestDetailDAO.findById(embdedId)
+        HarvestDetails detail = harvestDetailRepository.findById(embdedId)
                 .orElseThrow(() -> new EntityNotFoundException("HarvestDetail not found for treeId: " + treeId + " and harvestId: " + harvestId));
         HarvestDetailsResponseDTO response = harvestDetailDtoMapper.toDto(detail);
-        harvestDetailDAO.deleteById(embdedId);
+        harvestDetailRepository.deleteById(embdedId);
         return response;
     }
 
@@ -85,7 +85,7 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
         embdedId.setTreeId(treeId);
         embdedId.setHarvestId(harvestId);
         
-        HarvestDetails detail = harvestDetailDAO.findById(embdedId)
+        HarvestDetails detail = harvestDetailRepository.findById(embdedId)
                 .orElseThrow(() -> new EntityNotFoundException("HarvestDetail not found for treeId: " + treeId + " and harvestId: " + harvestId));
         return harvestDetailDtoMapper.toDto(detail);
     }
@@ -93,7 +93,7 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
     @Override
     @Transactional(readOnly = true)
     public List<HarvestDetailsResponseDTO> findAll() {
-        return harvestDetailDAO.findAll().stream()
+        return harvestDetailRepository.findAll().stream()
                 .map(harvestDetailDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
