@@ -32,12 +32,10 @@ public class TreeServiceImpl implements TreeServiceI {
     public TreeResponseDTO save(TreeRequestDTO requestDTO) {
         Tree tree = treeDtoMapper.toEntity(requestDTO);
         ValidatePlantingDate(requestDTO.getPlantingDate());
-        
         Field field = fieldDAO.findById(requestDTO.getFieldId())
                 .orElseThrow(() -> new EntityNotFoundException("Field not found with id: " + requestDTO.getFieldId()));
         ValidateTreeDensity(field);
         tree.setField(field);
-        
         Tree savedTree = treeDAO.save(tree);
         return treeDtoMapper.toDto(savedTree);
     }
