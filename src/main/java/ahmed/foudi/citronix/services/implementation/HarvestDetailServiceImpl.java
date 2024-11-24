@@ -1,5 +1,7 @@
 package ahmed.foudi.citronix.services.implementation;
 
+import ahmed.foudi.citronix.exception.treeexception.TreeAlreadyHarvestedException;
+import ahmed.foudi.citronix.exception.treeexception.TreeNotProductiveException;
 import ahmed.foudi.citronix.repository.HarvestDetailRepository;
 import ahmed.foudi.citronix.repository.TreeRepository;
 import ahmed.foudi.citronix.repository.HarvestRepository;
@@ -13,6 +15,7 @@ import ahmed.foudi.citronix.entities.Harvest;
 
 import ahmed.foudi.citronix.mappers.harvestdetails.HarvestDetailsDtoMapper;
 import ahmed.foudi.citronix.services.interfaces.HarvestDetailServiceI;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,7 +40,12 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
                 .orElseThrow(() -> new EntityNotFoundException("Tree not found with id: " + requestDTO.getTreeId()));
         Harvest harvest = harvestRepository.findById(requestDTO.getHarvestId())
                 .orElseThrow(() -> new EntityNotFoundException("Harvest not found with id: " + requestDTO.getHarvestId()));
-
+        if(harvestDetailRepository.existsByTreeAndSaison(tree.getId(), harvest.getSaison())) {
+            throw new TreeAlreadyHarvestedException("the tree is already harvested with the id " + tree.getId());
+        }
+        if(!tree.isProductive()){
+            throw new TreeNotProductiveException("Tree is not productive with id: " + requestDTO.getTreeId());
+        }
         HarvestDetails harvestDetail = harvestDetailDtoMapper.toEntity(requestDTO);
         harvestDetail.setTree(tree);
         harvestDetail.setHarvest(harvest);

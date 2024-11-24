@@ -34,16 +34,7 @@ public class Tree {
         return Period.between(this.plantingDate, LocalDate.now()).getYears();
     }
 
-    public double calculateProductivity() {
-        int age = calculateAge();
-        if (age > 20) {
-            return 0.0; 
-        } else if (age > 10) {
-            return 20.0; 
-        } else if (age >= 3) {
-            return 12.0; 
-        } else {
-            return 2.5; 
-        }
+    public boolean isProductive() {
+        return calculateAge()<20;
     }
 }

@@ -1,7 +1,11 @@
 package ahmed.foudi.citronix.exception;
 
 import ahmed.foudi.citronix.dto.error.ErrorDTO;
+import ahmed.foudi.citronix.exception.farmexception.FarmException;
 import ahmed.foudi.citronix.exception.fieldexception.SuperficieFieldException;
+import ahmed.foudi.citronix.exception.treeexception.PlantingDateException;
+import ahmed.foudi.citronix.exception.treeexception.TreeDensityException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +23,31 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDTO> handleSuperficieFieldException(Exception ex, WebRequest request) {
         return buildErrorResponse(ex.getMessage(), request, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(FarmException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorDTO> handleFarmException(Exception ex, WebRequest request) {
+        return buildErrorResponse(ex.getMessage(), request, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PlantingDateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorDTO> handlePlantingDateException(Exception ex, WebRequest request) {
+        return buildErrorResponse(ex.getMessage(), request, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TreeDensityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorDTO> handleTreeDensityException(Exception ex, WebRequest request) {
+        return buildErrorResponse(ex.getMessage(), request, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorDTO> handleEntityNotFoundException(Exception ex, WebRequest request) {
+        return buildErrorResponse(ex.getMessage(), request, HttpStatus.BAD_REQUEST);
+    }
+
+
 
     private ResponseEntity<ErrorDTO> buildErrorResponse(String message, WebRequest request, HttpStatus status) {
         ErrorDTO errorDTO = ErrorDTO.builder()

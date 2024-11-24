@@ -27,5 +27,9 @@ public class Field {
     private Farm farm;
 
     @OneToMany(mappedBy = "field", fetch = FetchType.EAGER)
+    private List<Harvest> harvests;
+
+
+    @OneToMany(mappedBy = "field", fetch = FetchType.EAGER)
     private List<Tree> trees;
 }

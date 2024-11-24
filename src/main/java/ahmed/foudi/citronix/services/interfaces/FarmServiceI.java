@@ -14,5 +14,4 @@ public interface FarmServiceI {
     FarmResponseDTO update(Long id,FarmRequestDTO farmRequestDTO);
     FarmResponseDTO delete(Long id);
     List<FarmResponseDTO> searchFarms(String name, Double superficie, LocalDate dateCreation);
-
 }

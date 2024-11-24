@@ -1,6 +1,7 @@
 package ahmed.foudi.citronix.dto.farm;
 
 import ahmed.foudi.citronix.dto.field.FieldResponseDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,6 @@ public class FarmResponseDTO {
 
     LocalDate dateCreation;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     List<FieldResponseDTO> fields;
 }

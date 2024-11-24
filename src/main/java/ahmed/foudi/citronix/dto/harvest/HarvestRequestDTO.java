@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HarvestRequestDTO {
+    private Long fieldId;
     private LocalDate dateRecolte;
     private double totalquantity;
     private Saison saison;

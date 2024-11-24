@@ -1,5 +1,6 @@
 package ahmed.foudi.citronix.dto.harvest;
 
+import ahmed.foudi.citronix.dto.field.FieldEmbeddedDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import ahmed.foudi.citronix.entities.Saison;
 import ahmed.foudi.citronix.dto.vent.VentEmbeddedDTO;
@@ -20,4 +21,5 @@ public class HarvestResponseDTO {
     private Saison saison;
     private List<HarvestDetailsEmbeddedDTO> harvestDetails;
     private List<VentEmbeddedDTO> ventes;
+    private FieldEmbeddedDTO field;
 }

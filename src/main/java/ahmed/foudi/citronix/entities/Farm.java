@@ -26,7 +26,7 @@ public class Farm {
     private String location;
 
     @NotNull(message = "La superficie est obligatoire")
-    @Min(value = 20000, message = "La superficie minimale d'une ferme doit être de 2 hectares (20 000 m²)")
+    @Min(value = 2000, message = "La superficie minimale d'une ferme doit être au minimum de 0.2 hectares (2000 m²)")
     private Double superficie;
 
     @Column(name = "date_creation")
