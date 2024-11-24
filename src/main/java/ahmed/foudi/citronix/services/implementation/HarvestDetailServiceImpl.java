@@ -1,5 +1,6 @@
 package ahmed.foudi.citronix.services.implementation;
 
+import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import ahmed.foudi.citronix.exception.treeexception.TreeAlreadyHarvestedException;
 import ahmed.foudi.citronix.exception.treeexception.TreeNotProductiveException;
 import ahmed.foudi.citronix.repository.HarvestDetailRepository;
@@ -48,6 +49,7 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
         }
         HarvestDetails harvestDetail = harvestDetailDtoMapper.toEntity(requestDTO);
         harvestDetail.setTree(tree);
+        harvest.setTotalquantity(harvest.getTotalquantity()+requestDTO.getQuantity());
         harvestDetail.setHarvest(harvest);
         
         EmbdedId embdedId = new EmbdedId();
@@ -100,9 +102,9 @@ public class HarvestDetailServiceImpl implements HarvestDetailServiceI {
 
     @Override
     @Transactional(readOnly = true)
-    public List<HarvestDetailsResponseDTO> findAll() {
+    public List<HarvestDetailsEmbeddedDTO> findAll() {
         return harvestDetailRepository.findAll().stream()
-                .map(harvestDetailDtoMapper::toDto)
+                .map(harvestDetailDtoMapper::toEmbeddedDto)
                 .collect(Collectors.toList());
     }
 }

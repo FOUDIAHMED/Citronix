@@ -51,7 +51,7 @@ public class HarvestServiceImpl implements HarvestServiceI {
             .orElseThrow(() -> new EntityNotFoundException("Field not found with id: " + requestDTO.getFieldId()));
             
         validateSeasonalHarvest(field, requestDTO.getSaison(), requestDTO.getDateRecolte().getYear());
-        
+
         Harvest harvest = harvestDtoMapper.toEntity(requestDTO);
         harvest.setField(field);
         
@@ -65,7 +65,6 @@ public class HarvestServiceImpl implements HarvestServiceI {
                 .orElseThrow(() -> new EntityNotFoundException("Harvest not found with id: " + id));
         
         existingHarvest.setDateRecolte(harvestRequestDTO.getDateRecolte());
-        existingHarvest.setTotalquantity(harvestRequestDTO.getTotalquantity());
         existingHarvest.setSaison(harvestRequestDTO.getSaison());
         
         Harvest updatedHarvest = harvestRepository.save(existingHarvest);

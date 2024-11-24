@@ -24,11 +24,12 @@ public class Harvest {
     private LocalDate dateRecolte;
 
 
-    @NotNull(message = "La quantité totale est obligatoire")
+
     @Min(value = 0, message = "La quantité totale ne peut pas être négative")
-    private Double totalquantity;
+    private double totalquantity=0;
 
     @NotNull(message = "La saison est obligatoire")
+    @Enumerated(EnumType.STRING)
     private Saison saison;
 
     @ManyToOne(fetch = FetchType.EAGER)

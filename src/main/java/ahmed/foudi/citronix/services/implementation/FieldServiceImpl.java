@@ -77,17 +77,9 @@ public class FieldServiceImpl implements FieldServiceI {
     public FieldResponseDTO update(Long id, FieldRequestDTO fieldRequestDTO) {
         Field existingField = fieldRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Field not found with id: " + id));
-
-        existingField.setSurface(fieldRequestDTO.getSurface());
-
-        if (fieldRequestDTO.getFarmId() != null && 
-            !fieldRequestDTO.getFarmId().equals(existingField.getFarm().getId())) {
-            Farm newFarm = farmRepository.findById(fieldRequestDTO.getFarmId())
-                    .orElseThrow(() -> new EntityNotFoundException("Farm not found with id: " + fieldRequestDTO.getFarmId()));
-            existingField.setFarm(newFarm);
-        }
-        
-        Field updatedField = fieldRepository.save(existingField);
+        Field fieldvalidated=validateField(fieldRequestDTO);
+        fieldvalidated.setId(id);
+        Field updatedField = fieldRepository.save(fieldvalidated);
         return fieldDtoMapper.toDto(updatedField);
     }
 

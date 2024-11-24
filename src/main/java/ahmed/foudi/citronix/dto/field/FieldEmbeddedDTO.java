@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FieldEmbeddedDTO {
-    Long id;
-    double surface;
+    private Long id;
+    private double surface;
 
 }

@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class FieldRequestDTO {
-    Long farmId;
-    double surface;
+    private Long farmId;
+    private double surface;
 }

@@ -12,8 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FarmRequestDTO {
-    private String name;
-    private String location;
-    private double superficie;
-    private LocalDate dateCreation;
+     String name;
+     String location;
+     double superficie;
+     LocalDate dateCreation;
 }

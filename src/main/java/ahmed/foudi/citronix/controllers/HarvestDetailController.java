@@ -1,5 +1,6 @@
 package ahmed.foudi.citronix.controllers;
 
+import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsRequestDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsResponseDTO;
 import ahmed.foudi.citronix.services.interfaces.HarvestDetailServiceI;
@@ -24,7 +25,7 @@ public class HarvestDetailController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HarvestDetailsResponseDTO>> getAllHarvestDetails() {
+    public ResponseEntity<List<HarvestDetailsEmbeddedDTO>> getAllHarvestDetails() {
         return ResponseEntity.ok(harvestDetailService.findAll());
     }
 

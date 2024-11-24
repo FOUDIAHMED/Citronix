@@ -27,15 +27,35 @@ public class VentServiceImpl implements VentServiceI {
 
     @Override
     public VentResponseDTO save(VentRequestDTO ventRequestDTO) {
-        Vent vent = ventDtoMapper.toEntity(ventRequestDTO);
-        
+       
         Harvest harvest = harvestRepository.findById(ventRequestDTO.getHarvestId())
                 .orElseThrow(() -> new EntityNotFoundException("Harvest not found with id: " + ventRequestDTO.getHarvestId()));
+        
+        if (ventRequestDTO.getQuantity() > harvest.getTotalquantity()) {
+            throw new IllegalArgumentException("Quantité demandée non disponible dans la récolte");
+        }
+        validateQantity(ventRequestDTO.getQuantity(), harvest);
+
+        
+        Vent vent = ventDtoMapper.toEntity(ventRequestDTO);
         vent.setHarvest(harvest);
+        
+
+        harvestRepository.save(harvest);
         
         Vent savedVent = ventRepository.save(vent);
         return ventDtoMapper.toDto(savedVent);
     }
+
+    public void validateQantity(double quantity,Harvest harvest) {
+        double quantityVentes=harvest.getVentes().stream().mapToDouble(Vent::getQuantity).sum();
+        if(quantityVentes+quantity>harvest.getTotalquantity()){
+            throw new IllegalArgumentException("la quantité qui rest est plus moins que la quantite que vous avez donnez");
+        }
+
+    }
+
+
 
     @Override
     public VentResponseDTO update(Long id, VentRequestDTO ventRequestDTO) {
@@ -45,6 +65,8 @@ public class VentServiceImpl implements VentServiceI {
         existingVent.setDate(ventRequestDTO.getDate());
         existingVent.setQuantity(ventRequestDTO.getQuantity());
         existingVent.setPrixUnitaire(ventRequestDTO.getPrixUnitaire());
+        existingVent.setClient(ventRequestDTO.getClient());
+
         
         if (ventRequestDTO.getHarvestId() != null && 
             !ventRequestDTO.getHarvestId().equals(existingVent.getHarvest().getId())) {

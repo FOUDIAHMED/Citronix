@@ -35,6 +35,9 @@ public class TreeServiceImpl implements TreeServiceI {
         Field field = fieldRepository.findById(requestDTO.getFieldId())
                 .orElseThrow(() -> new EntityNotFoundException("Field not found with id: " + requestDTO.getFieldId()));
         ValidateTreeDensity(field);
+        if (requestDTO.getPlantingDate().isBefore(field.getFarm().getDateCreation())) {
+            throw new PlantingDateException("La date de plantation ne peut pas être antérieure à la date de création de la ferme.");
+        }
         tree.setField(field);
         Tree savedTree = treeRepository.save(tree);
         return treeDtoMapper.toDto(savedTree);
@@ -62,7 +65,7 @@ public class TreeServiceImpl implements TreeServiceI {
     public TreeResponseDTO update(Long id, TreeRequestDTO requestDTO) {
         Tree existingTree = treeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tree not found with id: " + id));
-        
+        ValidatePlantingDate(requestDTO.getPlantingDate());
         existingTree.setPlantingDate(requestDTO.getPlantingDate());
         
         if (requestDTO.getFieldId() != null && 

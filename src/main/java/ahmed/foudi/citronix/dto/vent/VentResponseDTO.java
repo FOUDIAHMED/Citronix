@@ -15,5 +15,7 @@ public class VentResponseDTO {
     private LocalDate date;
     private double prixUnitaire;
     private double quantity;
+    private String client;
+    private double revenue;
     private HarvestEmbeddedDTO harvest;
 }

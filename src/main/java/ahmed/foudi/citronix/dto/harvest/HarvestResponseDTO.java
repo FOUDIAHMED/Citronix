@@ -4,6 +4,7 @@ import ahmed.foudi.citronix.dto.field.FieldEmbeddedDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import ahmed.foudi.citronix.entities.Saison;
 import ahmed.foudi.citronix.dto.vent.VentEmbeddedDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ public class HarvestResponseDTO {
     private LocalDate dateRecolte;
     private double totalquantity;
     private Saison saison;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<HarvestDetailsEmbeddedDTO> harvestDetails;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<VentEmbeddedDTO> ventes;
     private FieldEmbeddedDTO field;
 }

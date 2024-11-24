@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -42,5 +43,13 @@ public class FarmController {
     @DeleteMapping("/{id}")
     public ResponseEntity<FarmResponseDTO> deleteFarm(@PathVariable Long id) {
         return ResponseEntity.ok(farmService.delete(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FarmResponseDTO>> searchFarms(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Double superficie,
+            @RequestParam(required = false) LocalDate dateCreation) {
+        return ResponseEntity.ok(farmService.searchFarms(name, superficie, dateCreation));
     }
 } 

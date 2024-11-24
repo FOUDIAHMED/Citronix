@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HarvestDetailsResponseDTO {
-    private TreeEmbeddedDTO tree;
-    private HarvestEmbeddedDTO harvest;
-    private double quantity;
+     private TreeEmbeddedDTO tree;
+     private HarvestEmbeddedDTO harvest;
+     private double quantity;
 }

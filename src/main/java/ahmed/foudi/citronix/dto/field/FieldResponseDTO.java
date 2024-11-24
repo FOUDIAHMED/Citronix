@@ -2,6 +2,7 @@ package ahmed.foudi.citronix.dto.field;
 
 import ahmed.foudi.citronix.dto.farm.FarmEmbeddedDTO;
 import ahmed.foudi.citronix.dto.tree.TreeEmbeddedDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,12 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class FieldResponseDTO {
-    Long id;
+    private Long id;
 
-    double surface;
+    private double surface;
 
-    FarmEmbeddedDTO farm;
+    private FarmEmbeddedDTO farm;
 
-    List<TreeEmbeddedDTO> trees;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<TreeEmbeddedDTO> trees;
 
 }

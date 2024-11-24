@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HarvestDetailsRequestDTO {
-    private Long treeId;
-    private Long harvestId;
-    private double quantity;
+     Long treeId;
+     Long harvestId;
+     double quantity;
 }

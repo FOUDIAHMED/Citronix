@@ -13,5 +13,6 @@ public class VentRequestDTO {
     private LocalDate date;
     private double prixUnitaire;
     private double quantity;
+    private String client;
     private Long harvestId;
 }

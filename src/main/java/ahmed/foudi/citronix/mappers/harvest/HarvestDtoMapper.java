@@ -8,9 +8,10 @@ import ahmed.foudi.citronix.dto.harvest.HarvestRequestDTO;
 import ahmed.foudi.citronix.dto.harvest.HarvestResponseDTO;
 import ahmed.foudi.citronix.entities.Field;
 import ahmed.foudi.citronix.entities.Harvest;
+import ahmed.foudi.citronix.mappers.harvestdetails.HarvestDetailsDtoMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = HarvestDetailsDtoMapper.class)
 public interface HarvestDtoMapper {
     HarvestResponseDTO toDto(Harvest harvest);
     Harvest toEntity(HarvestRequestDTO request);

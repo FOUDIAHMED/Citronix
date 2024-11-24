@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HarvestDetailsEmbeddedDTO {
-    private Long treeId;
-    private Long harvestId;
-    private double quantity;
+     private Long treeId;
+     private Long harvestId;
+     private double quantity;
 }

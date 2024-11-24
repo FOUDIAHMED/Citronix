@@ -1,5 +1,6 @@
 package ahmed.foudi.citronix.services.interfaces;
 
+import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsEmbeddedDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsRequestDTO;
 import ahmed.foudi.citronix.dto.harvestdetails.HarvestDetailsResponseDTO;
 
@@ -10,6 +11,6 @@ public interface HarvestDetailServiceI {
     HarvestDetailsResponseDTO update(Long treeId,Long harvestId,HarvestDetailsRequestDTO harvestDetailsRequestDTO);
     HarvestDetailsResponseDTO delete(Long treeId,Long harvestId);
     HarvestDetailsResponseDTO findById(Long treeId,Long harvestId);
-    List<HarvestDetailsResponseDTO> findAll();
+    List<HarvestDetailsEmbeddedDTO> findAll();
 
 }

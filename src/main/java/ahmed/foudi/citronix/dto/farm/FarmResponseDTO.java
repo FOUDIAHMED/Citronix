@@ -13,15 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FarmResponseDTO {
-    Long id;
-    String name;
+    private Long id;
+    private String name;
 
-    String location;
+    private String location;
 
-    double superficie;
+    private double superficie;
 
-    LocalDate dateCreation;
+    private LocalDate dateCreation;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    List<FieldResponseDTO> fields;
+    private List<FieldResponseDTO> fields;
 }

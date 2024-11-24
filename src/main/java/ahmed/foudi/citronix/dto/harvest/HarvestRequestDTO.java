@@ -13,6 +13,5 @@ import java.time.LocalDate;
 public class HarvestRequestDTO {
     private Long fieldId;
     private LocalDate dateRecolte;
-    private double totalquantity;
     private Saison saison;
 }
